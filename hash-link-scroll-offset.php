@@ -60,23 +60,28 @@ class Hash_Link_Scroll_Offset {
 	 * @since  0.1.0
 	 * @return null
 	 */
-	public public function init() {
+	public function init() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'hash_link_scroll_offset' );
 		load_textdomain( 'hash_link_scroll_offset', WP_LANG_DIR . '/hash_link_scroll_offset/hash_link_scroll_offset-' . $locale . '.mo' );
 		load_plugin_textdomain( 'hash_link_scroll_offset', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		add_action( 'all_admin_notices', array( $this, 'admin_notice_activated' ) );
 	}
 
 	/**
 	 * Activate the plugin
 	 */
 	public function activate() {
-		add_action( 'all_admin_notices', array( $this, 'admin_notice_activated' ) );
 		if ( ! get_option( 'hash_link_scroll_offset' ) ) {
 			update_option( 'hash_link_scroll_offset', 0 );
 		}
+		add_option( 'hash_link_scroll_offset_msg', 1, null, 'no' );
 	}
 
 	public function admin_notice_activated() {
+		if ( ! get_option( 'hash_link_scroll_offset_msg' ) ) {
+			return;
+		}
+		delete_option( 'hash_link_scroll_offset_msg' );
 		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( __( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
 		echo '
 		<div id="message" class="updated">
@@ -87,20 +92,42 @@ class Hash_Link_Scroll_Offset {
 
 	public function admin_hooks() {
 		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . 'hash-link-scroll-offset.php' ), array( $this, 'settings_link' ) );
+
 		register_setting( 'general', 'hash_link_scroll_offset', 'absint' );
-		add_settings_field( 'hash_link_scroll_offset', '<label for="hash_link_scroll_offset">'. self::$name .'</label>' , array( $this, 'fields_html' ) , 'general' );
+
+		$class = isset( $_GET['hash_link_scroll_offset'] ) ? ' highlighted' : '';
+		add_settings_field( 'hash_link_scroll_offset', '<label for="hash_link_scroll_offset" class="hash_link_scroll_offset_setting_label'. $class .'">'. self::$name .'</label>' , array( $this, 'fields_html' ) , 'general' );
 	}
 
 	public function settings_link( $links ) {
 
-		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Update Setting', 'dsgnwrks' ) );
+		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Change Offset Setting', 'dsgnwrks' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
 	}
 
 	public function fields_html() {
-		echo '<input type="text" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="' . get_option( 'hash_link_scroll_offset', 0 ) . '" />';
+		$class = isset( $_GET['hash_link_scroll_offset'] ) ? ' highlighted' : '';
+
+		if ( $class ) : ?>
+		<style type="text/css" media="screen">
+			.hash_link_scroll_offset_setting_label.highlighted,
+			.hash_link_scroll_offset_setting_wrap.highlighted {
+				background: #ffbebe;
+				outline: #ffbebe 5px solid;
+				display: block;
+			}
+			.hash_link_scroll_offset_setting_label.highlighted {
+				display: block;
+				outline: #ffbebe 8px solid;
+			}
+		</style>
+		<?php endif; ?>
+		<div class="hash_link_scroll_offset_setting_wrap<?php echo $class; ?>">
+			<input class="small-text" placeholder="50" type="number" step="1" min="1" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="<?php echo get_option( 'hash_link_scroll_offset', 0 ); ?>"> <?php _e( 'pixels', 'hash_link_scroll_offset' ); ?>
+		</div>
+		<?php
 	}
 
 	/**
@@ -110,7 +137,7 @@ class Hash_Link_Scroll_Offset {
 	 */
 	public function enqueue_js() {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		wp_enqueue_script( 'hash_link_scroll_offset', self::$url . "assets/hash-link-scroll-offset$min.js", array( 'jquery' ), self::VERSION, true );
+		wp_enqueue_script( 'hash_link_scroll_offset', self::$url . "assets/js/hash-link-scroll-offset$min.js", array( 'jquery' ), self::VERSION, true );
 		wp_localize_script( 'hash_link_scroll_offset', 'hashLinkOffset', get_option( 'hash_link_scroll_offset', 0 ) );
 	}
 
