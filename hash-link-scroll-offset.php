@@ -101,7 +101,7 @@ class Hash_Link_Scroll_Offset {
 
 	public function settings_link( $links ) {
 
-		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Change Offset Setting', 'dsgnwrks' ) );
+		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
