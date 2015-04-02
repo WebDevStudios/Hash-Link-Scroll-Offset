@@ -18,7 +18,7 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 	app.init = function() {
 
 		// Handle clicking hash links
-		$( 'a[href^="#"]' ).on( 'click', function() {
+		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function() {
 			app.scrollToHash( this.hash );
 		});
 
