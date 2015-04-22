@@ -10,6 +10,8 @@
  * License:     GPLv2+
  * Text Domain: hash_link_scroll_offset
  * Domain Path: /languages
+ * GitHub Plugin URI: https://github.com/WebDevStudios/Hash-Link-Scroll-Offset
+ * GitHub Branch: master
  */
 
 /**
