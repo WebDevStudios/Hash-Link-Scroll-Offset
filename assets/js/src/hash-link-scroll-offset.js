@@ -13,9 +13,10 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 	'use strict';
 
 	var app = {};
-	app.offset = window.hashLinkOffset || 0;
 
 	app.init = function() {
+
+		app.offset = app.getOffset();
 
 		// Handle clicking hash links
 		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function() {
@@ -29,6 +30,18 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 				app.scrollToHash( window.location.hash );
 			}
 		}, 10 );
+
+	};
+
+	app.getOffset = function() {
+		var offset = window.hashLinkOffset || 0;
+
+		// increase the offset by 32px if the WP Admin Bar is present
+		if ( $('#wpadminbar').length ) {
+			offset = ( parseInt( offset, 10 ) + 32 ).toString();
+		}
+
+		return offset;
 
 	};
 
