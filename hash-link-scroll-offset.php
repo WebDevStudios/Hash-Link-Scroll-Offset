@@ -129,6 +129,7 @@ class Hash_Link_Scroll_Offset {
 		<div class="hash_link_scroll_offset_setting_wrap<?php echo $class; ?>">
 			<input class="small-text" placeholder="50" type="number" step="1" min="1" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="<?php echo get_option( 'hash_link_scroll_offset', 0 ); ?>"> <?php _e( 'pixels', 'hash_link_scroll_offset' ); ?>
 		</div>
+		<p class="description"><?php _e( 'When the Admin Bar is displayed in your theme, this value is automatically increased by 32px.', 'hash_link_scroll_offset' ); ?></p>
 		<?php
 	}
 
