@@ -4,7 +4,7 @@ Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 3.6.0
 Tested up to:      3.6.0
-Stable tag:        0.1.1
+Stable tag:        0.1.2
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.1.2 =
+* Automatically compensate for admin bar. Props [@salcode](https://github.com/WebDevStudios/Hash-Link-Scroll-Offset/pull/5).
+
 = 0.1.1 =
 * Add `no-scroll` class exception. Props [@billerickson](https://github.com/billerickson)
 
@@ -39,6 +42,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 * First release
 
 == Upgrade Notice ==
+
+= 0.1.2 =
+* Automatically compensate for admin bar. Props [@salcode](https://github.com/WebDevStudios/Hash-Link-Scroll-Offset/pull/5).
 
 = 0.1.1 =
 * Add `no-scroll` class exception. Props [@billerickson](https://github.com/billerickson)
