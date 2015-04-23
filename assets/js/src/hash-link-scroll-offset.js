@@ -34,10 +34,10 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 	};
 
 	app.getOffset = function() {
-		var offset = window.hlso_data.offset || 0;
+		var offset = window.hlso_offset || 0;
 
 		// increase the offset by 32px if the WP Admin Bar is present
-		if ( window.hlso_data.admin_bar_showing ) {
+		if ( $( '#wpadminbar' ).length ) {
 			offset = ( parseInt( offset, 10 ) + 32 ).toString();
 		}
 

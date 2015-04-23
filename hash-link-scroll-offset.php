@@ -141,10 +141,7 @@ class Hash_Link_Scroll_Offset {
 	public function enqueue_js() {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
 		wp_enqueue_script( 'hash_link_scroll_offset', self::$url . "assets/js/hash-link-scroll-offset$min.js", array( 'jquery' ), self::VERSION, true );
-		wp_localize_script( 'hash_link_scroll_offset', 'hlso_data', array(
-			'admin_bar_showing' => is_admin_bar_showing(),
-			'offset'            => get_option( 'hash_link_scroll_offset', 0 ),
-		) );
+-		wp_localize_script( 'hash_link_scroll_offset', 'hlso_offset', get_option( 'hash_link_scroll_offset', 0 ) );
 	}
 
 	public function settings_url() {
