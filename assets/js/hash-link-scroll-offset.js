@@ -1,4 +1,4 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2015-04-23
+/*! Hash Link Scroll Offset - v0.1.0 - 2015-04-24
  * http://webdevstudios.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 /*jslint browser: true */
@@ -14,7 +14,8 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 		app.offset = app.getOffset();
 
 		// Handle clicking hash links
-		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function() {
+		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function(event) {
+			event.preventDefault();
 			app.scrollToHash( this.hash );
 		});
 
