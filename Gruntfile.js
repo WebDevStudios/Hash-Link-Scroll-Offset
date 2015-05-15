@@ -64,7 +64,7 @@ module.exports = function( grunt ) {
 		test:   {
 			files: ['assets/js/test/**/*.js']
 		},
-		
+
 		cssmin: {
 			options: {
 				banner: '/*! <%= pkg.title %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' +
@@ -75,16 +75,16 @@ module.exports = function( grunt ) {
 			},
 			minify: {
 				expand: true,
-				
+
 				cwd: 'assets/css/src/',
 				src: ['hash-link-scroll-offset.css'],
-				
+
 				dest: 'assets/css/',
 				ext: '.min.css'
 			}
 		},
 		watch:  {
-			
+
 			styles: {
 				files: ['assets/css/src/*.css'],
 				tasks: ['cssmin'],
@@ -92,7 +92,7 @@ module.exports = function( grunt ) {
 					debounceDelay: 500
 				}
 			},
-			
+
 			scripts: {
 				files: ['assets/js/src/**/*.js', 'assets/js/vendor/**/*.js'],
 				tasks: ['jshint', 'concat', 'uglify'],
@@ -108,13 +108,12 @@ module.exports = function( grunt ) {
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	
+
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	// Default task.
-	
+
 	grunt.registerTask( 'default', ['jshint', 'concat', 'uglify', 'cssmin'] );
-	
 
 	grunt.util.linefeed = '\n';
 };
