@@ -18,6 +18,9 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 
 		app.offset = app.getOffset();
 
+		// cache jQuery selector results
+		app.$html_and_body = $('html, body');
+
 		// Handle clicking hash links
 		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function(event) {
 			event.preventDefault();
@@ -59,7 +62,7 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 			return;
 		}
 
-		$('html, body').stop().animate({
+		app.$html_and_body.stop().animate({
 			'scrollTop': $element_to_scroll_to.offset().top - app.offset // scroll and offset
 		}, 900 );
 
