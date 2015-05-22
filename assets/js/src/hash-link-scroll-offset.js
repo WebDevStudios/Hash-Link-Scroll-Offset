@@ -25,6 +25,7 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function(event) {
 			event.preventDefault();
 			app.scrollToHash( this.hash );
+			window.location.hash = this.hash;
 		});
 
 		// Handle directly navigating to a hashed URL
