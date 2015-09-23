@@ -1,4 +1,4 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2015-05-22
+/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-22
  * http://webdevstudios.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 /*jslint browser: true */
@@ -34,7 +34,7 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 	};
 
 	app.getOffset = function() {
-		var offset = window.hlso_offset || 0;
+		var offset = window.hlso_offset ? window.hlso_offset.offset : 0;
 
 		// increase the offset by 32px if the WP Admin Bar is present
 		if ( $( '#wpadminbar' ).length ) {
