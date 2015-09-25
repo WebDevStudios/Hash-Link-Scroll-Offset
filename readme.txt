@@ -4,7 +4,7 @@ Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 3.6.0
 Tested up to:      4.2.2
-Stable tag:        0.1.4
+Stable tag:        0.1.5
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,6 +32,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.1.5 =
+* `'hash_link_scroll_offset.complete'` jQuery event fired when scrolling complete.
+
 = 0.1.4 =
 * Fix "Cannot use a scalar value as an array" debug warning. ([Relevant Trac ticket](https://core.trac.wordpress.org/ticket/29722#comment:8))
 
@@ -48,6 +51,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 * First release
 
 == Upgrade Notice ==
+
+= 0.1.5 =
+* `'hash_link_scroll_offset.complete'` jQuery event fired when scrolling complete.
 
 = 0.1.4 =
 * Fix "Cannot use a scalar value as an array" debug warning. ([Relevant Trac ticket](https://core.trac.wordpress.org/ticket/29722#comment:8))

@@ -9,10 +9,10 @@
 /*jslint browser: true */
 /*global jQuery:false */
 
-window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
-	'use strict';
+window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
-	var app = {};
+( function( window, document, $, app, undefined ){
+	'use strict';
 
 	app.init = function() {
 
@@ -65,12 +65,14 @@ window.Hash_Link_Scroll_Offset = (function(window, document, $, undefined){
 
 		app.$html_and_body.stop().animate({
 			'scrollTop': $element_to_scroll_to.offset().top - app.offset // scroll and offset
-		}, 900 );
+		}, 900, 'swing', function( evt ) {
+			app.$html_and_body.trigger( 'hash_link_scroll_offset.complete', evt );
+		} );
 
 	};
 
-	$(document).ready( app.init );
+	$( app.init );
 
 	return app;
 
-})(window, document, jQuery);
+} )( window, document, jQuery, window.Hash_Link_Scroll_Offset );
