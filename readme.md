@@ -3,8 +3,8 @@
 **Donate link:**       http://webdevstudios.com  
 Tags:
 **Requires at least:** 3.6.0  
-**Tested up to:**      4.2.2  
-**Stable tag:**        0.1.5  
+**Tested up to:**      4.3  
+**Stable tag:**        0.1.6  
 **License:**           GPLv2 or later  
 **License URI:**       http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -25,6 +25,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 3. Update the "Hash Link Scroll Offset" setting on the general settings page, **http://YOURSITE.COM/wp-admin/options-general.php**.
 
 ## Changelog ##
+
+### 0.1.6
+* `'hash_link_scroll_offset.scroll_to'` jQuery event fired befor scrolling is initated. Also introduce useful properties, `scrollTo`, `initialScroll`, and `isScrolling`;
 
 ### 0.1.5
 * `'hash_link_scroll_offset.complete'` jQuery event fired when scrolling complete.

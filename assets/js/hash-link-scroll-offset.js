@@ -1,4 +1,4 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-25
+/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-26
  * http://webdevstudios.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 /*jslint browser: true */
@@ -8,6 +8,15 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 ( function( window, document, $, app, undefined ){
 	'use strict';
+
+	app.scrollTo = 0;
+	app.initialScroll = false;
+	app.isScrolling = false;
+
+	// Handle directly navigating to a hashed URL
+	if ( window.location.hash ) {
+		app.initialScroll = app.isScrolling = true;
+	}
 
 	app.init = function() {
 
@@ -23,13 +32,12 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 			window.location.hash = this.hash;
 		});
 
-		// Handle directly navigating to a hashed URL
-		setTimeout( function() {
-			if ( window.location.hash ) {
+		if ( app.initialScroll ) {
+			setTimeout( function() {
 				window.scrollTo( 0, 0 );
 				app.scrollToHash( window.location.hash );
-			}
-		}, 10 );
+			}, 10 );
+		}
 
 	};
 
@@ -58,10 +66,17 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 			return;
 		}
 
+		app.isScrolling = true;
+
+		app.scrollTo = $element_to_scroll_to.offset().top - app.offset;
+
+		app.$html_and_body.trigger( 'hash_link_scroll_offset.scroll_to', app.scrollTo );
+
 		app.$html_and_body.stop().animate({
-			'scrollTop': $element_to_scroll_to.offset().top - app.offset // scroll and offset
+			'scrollTop': app.scrollTo // scroll and offset
 		}, 900, 'swing', function( evt ) {
 			app.$html_and_body.trigger( 'hash_link_scroll_offset.complete', evt );
+			app.initialScroll = app.isScrolling = false;
 		} );
 
 	};
