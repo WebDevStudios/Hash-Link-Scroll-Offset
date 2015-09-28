@@ -32,6 +32,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.1.7 =
+* Refactor JS to be more extensible.
+
 = 0.1.6 =
 * `'hash_link_scroll_offset.scroll_to'` jQuery event fired befor scrolling is initated. Also introduce useful properties, `scrollTo`, `initialScroll`, and `isScrolling`;
 
@@ -54,6 +57,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 * First release
 
 == Upgrade Notice ==
+
+= 0.1.7 =
+* Refactor JS to be more extensible.
 
 = 0.1.6 =
 * `'hash_link_scroll_offset.scroll_to'` jQuery event fired befor scrolling is initated. Also introduce useful properties, `scrollTo`, `initialScroll`, and `isScrolling`;

@@ -1,4 +1,4 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-26
+/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-28
  * http://webdevstudios.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 /*jslint browser: true */
@@ -27,9 +27,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 		// Handle clicking hash links
 		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function( evt ) {
-			evt.preventDefault();
-			app.scrollToHash( this.hash );
-			window.location.hash = this.hash;
+			app.scrollToHash( this.hash, evt );
 		});
 
 		if ( app.initialScroll ) {
@@ -52,7 +50,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		return offset;
 	};
 
-	app.scrollToHash = function( hash ) {
+	app.scrollToHash = function( hash, evt ) {
 		// Check if linking to ID
 		var $element_to_scroll_to = $( hash );
 
@@ -66,19 +64,32 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 			return;
 		}
 
+		if ( $element_to_scroll_to.hasClass( '.no-scroll' ) || $element_to_scroll_to.parents( '.no-scroll-wrap' ).length ) {
+			return;
+		}
+
 		app.isScrolling = true;
 
 		app.scrollTo = $element_to_scroll_to.offset().top - app.offset;
 
 		app.$html_and_body.trigger( 'hash_link_scroll_offset.scroll_to', app.scrollTo );
 
-		app.$html_and_body.stop().animate({
-			'scrollTop': app.scrollTo // scroll and offset
-		}, 900, 'swing', function( evt ) {
-			app.$html_and_body.trigger( 'hash_link_scroll_offset.complete', evt );
-			app.initialScroll = app.isScrolling = false;
-		} );
+		app.scroll( app.scrollTo );
 
+		if ( evt.preventDefault ) {
+			evt.preventDefault();
+			window.location.hash = hash;
+		}
+
+	};
+
+	app.scroll = function( scrollTo ) {
+		app.$html_and_body.stop().animate({
+			'scrollTop': scrollTo // scroll and offset
+		}, 900, 'swing', function( evt ) {
+			app.initialScroll = app.isScrolling = false;
+			app.$html_and_body.trigger( 'hash_link_scroll_offset.complete', evt );
+		} );
 	};
 
 	$( app.init );
