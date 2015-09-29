@@ -34,7 +34,7 @@
 
 class Hash_Link_Scroll_Offset {
 
-	const VERSION = '0.1.6';
+	const VERSION = '0.1.7';
 	public static $url  = '';
 	public static $path = '';
 	public static $name = '';
