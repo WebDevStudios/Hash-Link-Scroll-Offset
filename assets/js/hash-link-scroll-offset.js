@@ -1,4 +1,4 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-28
+/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-29
  * http://webdevstudios.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 /*jslint browser: true */
@@ -12,10 +12,11 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 	app.scrollTo = 0;
 	app.initialScroll = false;
 	app.isScrolling = false;
+	app.hash = null;
 
 	// Handle directly navigating to a hashed URL
 	if ( window.location.hash ) {
-		app.initialScroll = app.isScrolling = true;
+		app.initialScroll = true;
 	}
 
 	app.init = function() {
@@ -27,13 +28,22 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 		// Handle clicking hash links
 		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function( evt ) {
-			app.scrollToHash( this.hash, evt );
+			app.hash = this.hash;
+			app.scrollToHash( app.hash, evt );
 		});
 
 		if ( app.initialScroll ) {
+			app.hash = window.location.hash;
+			var $element_to_scroll_to = app.getHashElement( app.hash );
+
+			if ( ! $element_to_scroll_to ) {
+				return;
+			}
+
 			setTimeout( function() {
+				app.isScrolling = true;
 				window.scrollTo( 0, 0 );
-				app.scrollToHash( window.location.hash );
+				app.scrollToHash( $element_to_scroll_to );
 			}, 10 );
 		}
 
@@ -50,21 +60,33 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		return offset;
 	};
 
-	app.scrollToHash = function( hash, evt ) {
+	app.getHashElement = function( hash ) {
+		var isEl = ( hash instanceof jQuery );
+
 		// Check if linking to ID
-		var $element_to_scroll_to = $( hash );
+		var $element_to_scroll_to = isEl ? hash : $( hash );
 
 		// If not..
-		if ( ! $element_to_scroll_to.length ) {
+		if ( ! $element_to_scroll_to.length && ! isEl ) {
 			// Check if linking to a named anchor
 			$element_to_scroll_to = $( '[name="' + hash.substr(1) + '"]' );
 		}
 
 		if ( ! $element_to_scroll_to.length ) {
-			return;
+			return false;
 		}
 
 		if ( $element_to_scroll_to.hasClass( '.no-scroll' ) || $element_to_scroll_to.parents( '.no-scroll-wrap' ).length ) {
+			return false;
+		}
+
+		return $element_to_scroll_to;
+	};
+
+	app.scrollToHash = function( hash, evt ) {
+		var $element_to_scroll_to = hash instanceof jQuery ? hash : app.getHashElement( hash );
+
+		if ( ! $element_to_scroll_to || ! $element_to_scroll_to.length ) {
 			return;
 		}
 
@@ -78,7 +100,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 		if ( evt.preventDefault ) {
 			evt.preventDefault();
-			window.location.hash = hash;
+			window.location.hash = app.hash;
 		}
 
 	};
