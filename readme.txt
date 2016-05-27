@@ -16,6 +16,8 @@ Often anchor links can be overachievers and can scroll a user past the section i
 
 Use the `no-scroll` class on any hash links that are not meant to scroll to an area of the page (Navigation for sliders, etc).
 
+[Pluginize](https://pluginize.com/?utm_source=hash-link-scroll&utm_medium=text&utm_campaign=wporg) was launched in 2016 by [WebDevStudios](https://webdevstudios.com/) to promote, support, and house all of their [WordPress products](https://pluginize.com/shop/?utm_source=hash-link-scroll&utm_medium=text&utm_campaign=wporg). Pluginize is not only creating new products for WordPress all the time, but also provides [ongoing support and development for WordPress community favorites like CPTUI](https://wordpress.org/plugins/custom-post-type-ui/), [CMB2](https://wordpress.org/plugins/cmb2/), and more.
+
 == Installation ==
 
 = Manual Installation =
