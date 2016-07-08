@@ -32,24 +32,54 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+/**
+ * Class Hash_Link_Scroll_Offset.
+ */
 class Hash_Link_Scroll_Offset {
 
 	const VERSION = '0.1.7';
+
+	/**
+	 * Plugin URL.
+	 *
+	 * @since 0.1.0
+	 * @var string
+	 */
 	public static $url  = '';
+
+	/**
+	 * Plugin path.
+	 *
+	 * @since 0.1.0
+	 * @var string
+	 */
 	public static $path = '';
+
+	/**
+	 * Plugin name.
+	 *
+	 * @since 0.1.0
+	 * @var string|void
+	 */
 	public static $name = '';
 
 	/**
 	 * Sets up our plugin
-	 * @since  0.1.0
+	 *
+	 * @since 0.1.0
 	 */
 	public function __construct() {
-		// Useful variables
+		// Useful variables.
 		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
 		self::$path = trailingslashit( dirname( __FILE__ ) );
 		self::$name = __( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
 	}
 
+	/**
+	 * Add our hooks.
+	 *
+	 * @since 0.1.0
+	 */
 	public function hooks() {
 		register_activation_hook( __FILE__, array( $this, 'activate' ) );
 		add_action( 'init', array( $this, 'init' ) );
@@ -58,9 +88,9 @@ class Hash_Link_Scroll_Offset {
 	}
 
 	/**
-	 * Init hooks
-	 * @since  0.1.0
-	 * @return null
+	 * Init hooks.
+	 *
+	 * @since 0.1.0
 	 */
 	public function init() {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'hash_link_scroll_offset' );
@@ -70,7 +100,9 @@ class Hash_Link_Scroll_Offset {
 	}
 
 	/**
-	 * Activate the plugin
+	 * Activate the plugin.
+	 *
+	 * @since 0.1.0
 	 */
 	public function activate() {
 		if ( ! get_option( 'hash_link_scroll_offset' ) ) {
@@ -79,6 +111,11 @@ class Hash_Link_Scroll_Offset {
 		add_option( 'hash_link_scroll_offset_msg', 1, null, 'no' );
 	}
 
+	/**
+	 * Admin notice for when activated.
+	 *
+	 * @since 0.1.0
+	 */
 	public function admin_notice_activated() {
 		if ( ! get_option( 'hash_link_scroll_offset_msg' ) ) {
 			return;
@@ -92,6 +129,11 @@ class Hash_Link_Scroll_Offset {
 		';
 	}
 
+	/**
+	 * Hooks to run on admin_init.
+	 *
+	 * @since 0.1.0
+	 */
 	public function admin_hooks() {
 		add_filter( 'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . 'hash-link-scroll-offset.php' ), array( $this, 'settings_link' ) );
 
@@ -101,6 +143,14 @@ class Hash_Link_Scroll_Offset {
 		add_settings_field( 'hash_link_scroll_offset', '<label for="hash_link_scroll_offset" class="hash_link_scroll_offset_setting_label'. $class .'">'. self::$name .'</label>' , array( $this, 'fields_html' ) , 'general' );
 	}
 
+	/**
+	 * Returns our HTML settings link.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param array $links Array of links for settings area.
+	 * @return mixed
+	 */
 	public function settings_link( $links ) {
 
 		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
@@ -109,6 +159,11 @@ class Hash_Link_Scroll_Offset {
 		return $links;
 	}
 
+	/**
+	 * Return our fields HTML.
+	 *
+	 * @since 0.1.0
+	 */
 	public function fields_html() {
 		$class = isset( $_GET['hash_link_scroll_offset'] ) ? ' highlighted' : '';
 
@@ -134,9 +189,9 @@ class Hash_Link_Scroll_Offset {
 	}
 
 	/**
-	 * Enqueue our JS
-	 * @since  0.1.0
-	 * @return null
+	 * Enqueue our JS.
+	 *
+	 * @since 0.1.0
 	 */
 	public function enqueue_js() {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
@@ -144,13 +199,20 @@ class Hash_Link_Scroll_Offset {
 		wp_localize_script( 'hash_link_scroll_offset', 'hlso_offset', array( 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ) );
 	}
 
+	/**
+	 * Return our admin settings URL.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @return string|void
+	 */
 	public function settings_url() {
 		return admin_url( 'options-general.php?hash_link_scroll_offset' );
 	}
 
 }
 
-// init our class
+// Init our class.
 $Hash_Link_Scroll_Offset = new Hash_Link_Scroll_Offset();
 $Hash_Link_Scroll_Offset->hooks();
 
