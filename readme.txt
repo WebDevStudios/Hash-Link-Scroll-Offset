@@ -3,7 +3,7 @@ Contributors:      webdevstudios, jtsternberg
 Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 3.6.0
-Tested up to:      4.3
+Tested up to:      4.5.3
 Stable tag:        0.1.6
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
