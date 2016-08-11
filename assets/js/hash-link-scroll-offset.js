@@ -1,6 +1,6 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2015-09-29
+/*! Hash Link Scroll Offset - v0.1.0 - 2016-08-11
  * http://webdevstudios.com
- * Copyright (c) 2015; * Licensed GPLv2+ */
+ * Copyright (c) 2016; * Licensed GPLv2+ */
 /*jslint browser: true */
 /*global jQuery:false */
 
@@ -27,8 +27,14 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		app.$html_and_body = $('html, body');
 
 		// Handle clicking hash links
-		$( 'a[href^="#"]:not(.no-scroll)' ).on( 'click', function( evt ) {
+		$( 'a[href*="#"]:not(.no-scroll)' ).on( 'click', function( evt ) {
 			app.hash = this.hash;
+
+			// If the element doesn't actually exist then bail.
+			if ( ! $( app.hash ) ) {
+				return;
+			}
+
 			app.scrollToHash( app.hash, evt );
 		});
 
@@ -98,7 +104,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 		app.scroll( app.scrollTo );
 
-		if ( evt.preventDefault ) {
+		if ( evt && evt.preventDefault ) {
 			evt.preventDefault();
 			window.location.hash = app.hash;
 		}
