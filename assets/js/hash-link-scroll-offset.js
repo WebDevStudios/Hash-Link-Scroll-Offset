@@ -1,4 +1,4 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2016-08-11
+/*! Hash Link Scroll Offset - v0.1.0 - 2016-08-27
  * http://webdevstudios.com
  * Copyright (c) 2016; * Licensed GPLv2+ */
 /*jslint browser: true */
