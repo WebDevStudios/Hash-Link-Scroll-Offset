@@ -109,7 +109,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 		app.scroll( app.scrollTo );
 
-		if ( evt.preventDefault ) {
+		if ( evt && evt.preventDefault ) {
 			evt.preventDefault();
 			window.location.hash = app.hash;
 		}
