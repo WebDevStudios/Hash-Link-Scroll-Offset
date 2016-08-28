@@ -34,6 +34,10 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.1.8 =
+* Adjust JS to account for relative urls.
+* Add checks for evt and event.preventDefault existing.
+
 = 0.1.7 =
 * Refactor JS to be more extensible, and adjust auto-scrolling (when hash exists in URL) to be more intelligent.
 
@@ -59,6 +63,10 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 * First release
 
 == Upgrade Notice ==
+
+= 0.1.8 =
+* Adjust JS to account for relative urls.
+* Add checks for evt and event.preventDefault existing.
 
 = 0.1.7 =
 * Refactor JS to be more extensible, and adjust auto-scrolling (when hash exists in URL) to be more intelligent.
