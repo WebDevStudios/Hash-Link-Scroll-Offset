@@ -1,5 +1,5 @@
 === Hash Link Scroll Offset ===
-Contributors:      webdevstudios, jtsternberg
+Contributors:      webdevstudios, pluginize, jtsternberg
 Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 3.6.0
