@@ -34,6 +34,10 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.2.0 =
+* Misc changes
+* Tested up to WordPress 5.9 *
+
 = 0.1.8 =
 * Adjust JS to account for relative urls.
 * Add checks for evt and event.preventDefault existing.
@@ -63,6 +67,10 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 * First release
 
 == Upgrade Notice ==
+
+= 0.2.0 =
+* Misc changes
+* Tested up to WordPress 5.9 *
 
 = 0.1.8 =
 * Adjust JS to account for relative urls.
