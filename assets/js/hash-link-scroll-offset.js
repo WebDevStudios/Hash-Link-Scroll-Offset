@@ -1,12 +1,12 @@
-/*! Hash Link Scroll Offset - v0.1.0 - 2016-08-27
+/*! Hash Link Scroll Offset - v0.1.8 - 2022-01-28
  * http://webdevstudios.com
- * Copyright (c) 2016; * Licensed GPLv2+ */
+ * Copyright (c) 2022; * Licensed GPLv2+ */
 /*jslint browser: true */
 /*global jQuery:false */
 
 window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
-( function( window, document, $, app, undefined ){
+( function( window, document, $, app ){
 	'use strict';
 
 	app.scrollTo = 0;
@@ -26,11 +26,9 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		// cache jQuery selector results
 		app.$html_and_body = $('html, body');
 
-		// Handle clicking hash links
 		$( 'a[href*="#"]:not(.no-scroll)' ).on( 'click', function( evt ) {
 			app.hash = this.hash;
 
-			// If the element doesn't actually exist then bail.
 			if ( ! $( app.hash ) ) {
 				return;
 			}
@@ -58,7 +56,6 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 	app.getOffset = function() {
 		var offset = window.hlso_offset ? window.hlso_offset.offset : 0;
 
-		// increase the offset by 32px if the WP Admin Bar is present
 		if ( $( '#wpadminbar' ).length ) {
 			offset = ( parseInt( offset, 10 ) + 32 ).toString();
 		}
@@ -113,7 +110,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 	app.scroll = function( scrollTo ) {
 		app.$html_and_body.stop().animate({
-			'scrollTop': scrollTo // scroll and offset
+			'scrollTop': scrollTo
 		}, 900, 'swing', function( evt ) {
 			app.initialScroll = app.isScrolling = false;
 			app.$html_and_body.trigger( 'hash_link_scroll_offset.complete', evt );
