@@ -1,10 +1,10 @@
 === Hash Link Scroll Offset ===
-Contributors:      webdevstudios, pluginize, jtsternberg
+Contributors:      webdevstudios, pluginize
 Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 5.5
-Tested up to:      5.9.0
-Stable tag:        0.2.0
+Tested up to:      6.3
+Stable tag:        0.2.1
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 
 == Changelog ==
+
+= 0.2.1 =
+* Confirmed compatibility with WordPress 6.3
 
 = 0.2.0 =
 * Misc changes
