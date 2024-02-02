@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name: Hash Link Scroll Offset
  * Plugin URI:  http://webdevstudios.com
@@ -45,7 +45,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $url  = '';
+	public static $url = '';
 
 	/**
 	 * Plugin path.
@@ -71,7 +71,7 @@ class Hash_Link_Scroll_Offset {
 	public function __construct() {
 		// Useful variables.
 		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
-		self::$path = trailingslashit( dirname( __FILE__ ) );
+		self::$path = trailingslashit( __DIR__ );
 		self::$name = __( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
 	}
 
@@ -81,10 +81,10 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 */
 	public function hooks() {
-		register_activation_hook( __FILE__, [ $this, 'activate' ] );
-		add_action( 'init', [ $this, 'init' ] );
-		add_filter( 'admin_init', [ $this, 'admin_hooks' ] );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
+		register_activation_hook( __FILE__, array( $this, 'activate' ) );
+		add_action( 'init', array( $this, 'init' ) );
+		add_filter( 'admin_init', array( $this, 'admin_hooks' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_js' ) );
 	}
 
 	/**
@@ -96,7 +96,7 @@ class Hash_Link_Scroll_Offset {
 		$locale = apply_filters( 'plugin_locale', get_locale(), 'hash_link_scroll_offset' );
 		load_textdomain( 'hash_link_scroll_offset', WP_LANG_DIR . '/hash_link_scroll_offset/hash_link_scroll_offset-' . $locale . '.mo' );
 		load_plugin_textdomain( 'hash_link_scroll_offset', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		add_action( 'all_admin_notices', [ $this, 'admin_notice_activated' ] );
+		add_action( 'all_admin_notices', array( $this, 'admin_notice_activated' ) );
 	}
 
 	/**
@@ -108,7 +108,7 @@ class Hash_Link_Scroll_Offset {
 		if ( ! get_option( 'hash_link_scroll_offset' ) ) {
 			update_option( 'hash_link_scroll_offset', 0 );
 		}
-		add_option( 'hash_link_scroll_offset_msg', 1, null, 'no' );
+		add_option( 'hash_link_scroll_offset_msg', 1, '', 'no' );
 	}
 
 	/**
@@ -121,12 +121,14 @@ class Hash_Link_Scroll_Offset {
 			return;
 		}
 		delete_option( 'hash_link_scroll_offset_msg' );
+		// translators: %s is the name of the plugin.
 		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( __( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
-		echo '
-		<div id="message" class="updated">
-			<p>' . sprintf( __( 'The "%s" plugin has been activated. Please %s.', 'hash_link_scroll_offset' ), self::$name, $settings_link ) . '</p>
-		</div>
-		';
+
+		echo wp_kses_post(
+			'<div id="message" class="updated">
+				<p>' . /* translators: %1$s is the name of the plugin, %2$s is a link to the settings page. */ sprintf( __( 'The "%1$s" plugin has been activated. Please %2$s.', 'hash_link_scroll_offset' ), self::$name, $settings_link ) . '</p>
+			</div>'
+		);
 	}
 
 	/**
@@ -137,7 +139,7 @@ class Hash_Link_Scroll_Offset {
 	public function admin_hooks() {
 		add_filter(
 			'plugin_action_links_' . plugin_basename( plugin_dir_path( __FILE__ ) . 'hash-link-scroll-offset.php' ),
-			[ $this, 'settings_link' ]
+			array( $this, 'settings_link' )
 		);
 
 		register_setting( 'general', 'hash_link_scroll_offset', 'absint' );
@@ -146,7 +148,7 @@ class Hash_Link_Scroll_Offset {
 		add_settings_field(
 			'hash_link_scroll_offset',
 			'<label for="hash_link_scroll_offset" class="hash_link_scroll_offset_setting_label' . $class . '">' . self::$name . '</label>',
-			[ $this, 'fields_html' ],
+			array( $this, 'fields_html' ),
 			'general'
 		);
 	}
@@ -188,8 +190,8 @@ class Hash_Link_Scroll_Offset {
 			}
 		</style>
 		<?php endif; ?>
-		<div class="hash_link_scroll_offset_setting_wrap<?php echo $class; ?>">
-			<input class="small-text" placeholder="50" type="number" step="1" min="1" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="<?php echo get_option( 'hash_link_scroll_offset', 0 ); ?>"> <?php esc_html_e( 'pixels', 'hash_link_scroll_offset' ); ?>
+		<div class="hash_link_scroll_offset_setting_wrap<?php echo esc_attr( $class ); ?>">
+			<input class="small-text" placeholder="50" type="number" step="1" min="1" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="<?php echo esc_attr( get_option( 'hash_link_scroll_offset', 0 ) ); ?>"> <?php esc_html_e( 'pixels', 'hash_link_scroll_offset' ); ?>
 		</div>
 		<p class="description"><?php esc_html_e( 'When the Admin Bar is displayed in your theme, this value is automatically increased by 32px.', 'hash_link_scroll_offset' ); ?></p>
 		<?php
@@ -225,10 +227,8 @@ class Hash_Link_Scroll_Offset {
 	public function settings_url() {
 		return admin_url( 'options-general.php?hash_link_scroll_offset' );
 	}
-
 }
 
 // Init our class.
-$Hash_Link_Scroll_Offset = new Hash_Link_Scroll_Offset();
-$Hash_Link_Scroll_Offset->hooks();
-
+$hash_link_scroll_offset = new Hash_Link_Scroll_Offset();
+$hash_link_scroll_offset->hooks();
