@@ -3,8 +3,8 @@ Contributors:      webdevstudios, pluginize
 Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 5.5
-Tested up to:      6.3
-Stable tag:        0.2.1
+Tested up to:      6.4.3
+Stable tag:        0.2.2
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 
 == Changelog ==
+
+= 0.2.2 =
+* Confirmed compatibility with WordPress 6.4
 
 = 0.2.1 =
 * Confirmed compatibility with WordPress 6.3
