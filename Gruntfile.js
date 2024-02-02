@@ -41,7 +41,7 @@ module.exports = function( grunt ) {
 					exports : true,
 					module  : false
 				},
-				predef  :['document','window']
+				predef  :['document','window', 'Event']
 			}
 		},
 		uglify: {

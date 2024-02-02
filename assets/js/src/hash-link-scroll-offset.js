@@ -7,11 +7,10 @@
  */
 
 /*jslint browser: true */
-/*global jQuery:false */
 
 window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
-( function( window, document, $, app ){
+( function( window, document, app ){
 	'use strict';
 
 	app.scrollTo = 0;
@@ -29,16 +28,17 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		app.offset = app.getOffset();
 
 		// cache jQuery selector results
-		app.$html_and_body = $('html, body');
+		app.$html_and_body = document.querySelectorAll('html, body');
 
-		$( 'a[href*="#"]:not(.no-scroll)' ).on( 'click', function( evt ) {
-			app.hash = this.hash;
-
-			if ( ! $( app.hash ) ) {
-				return;
-			}
-
-			app.scrollToHash( app.hash, evt );
+		var checkScroll = document.querySelectorAll('a:not(.no-scroll)');
+		checkScroll.forEach(function (a) {
+			a.addEventListener('click', function (evt) {
+				app.hash = this.hash;
+				if ( ! app.hash ) {
+					return;
+				}
+				app.scrollToHash( app.hash, evt );
+			});
 		});
 
 		if ( app.initialScroll ) {
@@ -61,7 +61,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 	app.getOffset = function() {
 		var offset = window.hlso_offset ? window.hlso_offset.offset : 0;
 
-		if ( $( '#wpadminbar' ).length ) {
+		if ( document.getElementById( 'wpadminbar' ) ) {
 			offset = ( parseInt( offset, 10 ) + 32 ).toString();
 		}
 
@@ -69,22 +69,22 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 	};
 
 	app.getHashElement = function( hash ) {
-		var isEl = ( hash instanceof jQuery );
+		var isEl = typeof hash === 'object';
 
 		// Check if linking to ID
-		var $element_to_scroll_to = isEl ? hash : $( hash );
+		var $element_to_scroll_to = isEl ? hash : document.getElementById( hash.substr(1) );
 
 		// If not..
-		if ( ! $element_to_scroll_to.length && ! isEl ) {
+		if ( ! $element_to_scroll_to && ! isEl ) {
 			// Check if linking to a named anchor
-			$element_to_scroll_to = $( '[name="' + hash.substr(1) + '"]' );
+			$element_to_scroll_to = document.querySelector( '[name="' + hash.substr(1) + '"]' );
 		}
 
-		if ( ! $element_to_scroll_to.length ) {
+		if ( ! $element_to_scroll_to) {
 			return false;
 		}
 
-		if ( $element_to_scroll_to.hasClass( '.no-scroll' ) || $element_to_scroll_to.parents( '.no-scroll-wrap' ).length ) {
+		if ( $element_to_scroll_to.classList.contains( 'no-scroll' ) || $element_to_scroll_to.closest( '.no-scroll-wrap' ) ) {
 			return false;
 		}
 
@@ -92,17 +92,20 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 	};
 
 	app.scrollToHash = function( hash, evt ) {
-		var $element_to_scroll_to = hash instanceof jQuery ? hash : app.getHashElement( hash );
+		var $element_to_scroll_to = typeof hash === 'object' ? hash : app.getHashElement( hash );
 
-		if ( ! $element_to_scroll_to || ! $element_to_scroll_to.length ) {
+		if ( ! $element_to_scroll_to ) {
 			return;
 		}
 
 		app.isScrolling = true;
 
-		app.scrollTo = $element_to_scroll_to.offset().top - app.offset;
+		app.scrollTo = $element_to_scroll_to.getBoundingClientRect().top - app.offset;
 
-		app.$html_and_body.trigger( 'hash_link_scroll_offset.scroll_to', app.scrollTo );
+		var event = new Event('hash_link_scroll_offset.scroll_to');
+		app.$html_and_body.forEach(function (el) {
+			el.dispatchEvent(event);
+		});
 
 		app.scroll( app.scrollTo );
 
@@ -114,16 +117,20 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 	};
 
 	app.scroll = function( scrollTo ) {
-		app.$html_and_body.stop().animate({
-			'scrollTop': scrollTo
-		}, 900, 'swing', function( evt ) {
-			app.initialScroll = app.isScrolling = false;
-			app.$html_and_body.trigger( 'hash_link_scroll_offset.complete', evt );
-		} );
+		window.scrollTo({
+			top: scrollTo,
+			behavior: "smooth"
+		});
+		app.initialScroll = app.isScrolling = false;
+		var event = new Event('hash_link_scroll_offset.complete');
+
+		app.$html_and_body.forEach(function (el) {
+			el.dispatchEvent(event);
+		});
 	};
 
-	$( app.init );
+	app.init();
 
 	return app;
 
-} )( window, document, jQuery, window.Hash_Link_Scroll_Offset );
+} )( window, document, window.Hash_Link_Scroll_Offset );
