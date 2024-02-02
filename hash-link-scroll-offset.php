@@ -201,9 +201,18 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 */
 	public function enqueue_js() {
-		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		wp_enqueue_script( 'hash_link_scroll_offset', self::$url . "assets/js/hash-link-scroll-offset$min.js", [], self::VERSION, true );
-		wp_localize_script( 'hash_link_scroll_offset', 'hlso_offset', [ 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ] );
+		// Automatically load imported dependencies and assets version.
+		$asset_file = require plugin_dir_path( __FILE__ ) . 'assets/js/hash-link-scroll-offset.asset.php';
+
+		wp_register_script(
+			'hash_link_scroll_offset',
+			plugins_url( 'assets/js/hash-link-scroll-offset.js', __FILE__ ),
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
+		wp_enqueue_script( 'hash_link_scroll_offset' );
+		wp_add_inline_script( 'hash_link_scroll_offset', 'const hlsOffset = ' . wp_json_encode( array( 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ) ) . ';', 'before' );
 	}
 
 	/**
