@@ -3,7 +3,7 @@
  * Plugin Name: Hash Link Scroll Offset
  * Plugin URI:  http://webdevstudios.com
  * Description: Offset the scroll position of anchored links. Handy if you have a sticky header that covers linked material.
- * Version:     0.2.1
+ * Version:     0.2.2
  * Author:      WebDevStudios
  * Author URI:  http://webdevstudios.com
  * Donate link: http://webdevstudios.com
