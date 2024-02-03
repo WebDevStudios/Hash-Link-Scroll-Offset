@@ -27,7 +27,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		app.offset = app.getOffset();
 
 		// cache jQuery selector results
-		app.$html_and_body = document.querySelectorAll( 'html, body' );
+		app.htmlAndBody = document.querySelectorAll( 'html, body' );
 
 		const checkScroll = document.querySelectorAll( 'a:not(.no-scroll)' );
 		checkScroll.forEach( function ( a ) {
@@ -110,7 +110,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 			elementToScrollTo.getBoundingClientRect().top - app.offset;
 
 		const event = new Event( 'hash_link_scroll_offset.scroll_to' );
-		app.$html_and_body.forEach( function ( el ) {
+		app.htmlAndBody.forEach( function ( el ) {
 			el.dispatchEvent( event );
 		} );
 
@@ -130,7 +130,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		app.initialScroll = app.isScrolling = false;
 		const event = new Event( 'hash_link_scroll_offset.complete' );
 
-		app.$html_and_body.forEach( function ( el ) {
+		app.htmlAndBody.forEach( function ( el ) {
 			el.dispatchEvent( event );
 		} );
 	};
