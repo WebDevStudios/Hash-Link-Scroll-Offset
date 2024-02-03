@@ -1,1 +1,141 @@
-window.Hash_Link_Scroll_Offset=window.Hash_Link_Scroll_Offset||{},function(t,o,l){"use strict";l.scrollTo=0,l.initialScroll=!1,l.isScrolling=!1,l.hash=null,t.location.hash&&(l.initialScroll=!0),l.init=function(){if(l.offset=l.getOffset(),l.$html_and_body=o.querySelectorAll("html, body"),o.querySelectorAll("a:not(.no-scroll)").forEach((function(t){t.addEventListener("click",(function(t){l.hash=this.hash,l.hash&&l.scrollToHash(l.hash,t)}))})),l.initialScroll){l.hash=t.location.hash;const o=l.getHashElement(l.hash);if(!o)return;setTimeout((function(){l.isScrolling=!0,t.scrollTo(0,0),l.scrollToHash(o)}),10)}},l.getOffset=function(){let t="undefined"!=typeof hlsOffset?hlsOffset.offset:0;return o.getElementById("wpadminbar")&&(t=(parseInt(t,10)+32).toString()),t},l.getHashElement=function(t){const l="object"==typeof t;let n=l?t:o.getElementById(t.substr(1));return n||l||(n=o.querySelector('[name="'+t.substr(1)+'"]')),!!n&&!n.classList.contains("no-scroll")&&!n.closest(".no-scroll-wrap")&&n},l.scrollToHash=function(o,n){const s="object"==typeof o?o:l.getHashElement(o);if(!s)return;l.isScrolling=!0,l.scrollTo=s.getBoundingClientRect().top-l.offset;const e=new Event("hash_link_scroll_offset.scroll_to");l.$html_and_body.forEach((function(t){t.dispatchEvent(e)})),l.scroll(l.scrollTo),n&&n.preventDefault&&(n.preventDefault(),t.location.hash=l.hash)},l.scroll=function(o){t.scrollTo({top:o,behavior:"smooth"}),l.initialScroll=l.isScrolling=!1;const n=new Event("hash_link_scroll_offset.complete");l.$html_and_body.forEach((function(t){t.dispatchEvent(n)}))},l.init()}(window,document,window.Hash_Link_Scroll_Offset);
+/**
+ * Hash Link Scroll Offset
+ * http://webdevstudios.com
+ *
+ * Copyright (c) 2014 WebDevStudios
+ * Licensed under the GPLv2+ license.
+ */
+
+/*jslint browser: true */
+
+window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
+
+( function ( window, document, app ) {
+	'use strict';
+
+	app.scrollTo = 0;
+	app.initialScroll = false;
+	app.isScrolling = false;
+	app.hash = null;
+
+	// Handle directly navigating to a hashed URL
+	if ( window.location.hash ) {
+		app.initialScroll = true;
+	}
+
+	app.init = function () {
+		app.offset = app.getOffset();
+
+		// cache jQuery selector results
+		app.$html_and_body = document.querySelectorAll( 'html, body' );
+
+		const checkScroll = document.querySelectorAll( 'a:not(.no-scroll)' );
+		checkScroll.forEach( function ( a ) {
+			a.addEventListener( 'click', function ( evt ) {
+				app.hash = this.hash;
+				if ( ! app.hash ) {
+					return;
+				}
+				app.scrollToHash( app.hash, evt );
+			} );
+		} );
+
+		if ( app.initialScroll ) {
+			app.hash = window.location.hash;
+			const elementToScrollTo = app.getHashElement( app.hash );
+
+			if ( ! elementToScrollTo ) {
+				return;
+			}
+
+			setTimeout( function () {
+				app.isScrolling = true;
+				window.scrollTo( 0, 0 );
+				app.scrollToHash( elementToScrollTo );
+			}, 10 );
+		}
+	};
+
+	app.getOffset = function () {
+		let offset = typeof hlsOffset !== 'undefined' ? hlsOffset.offset : 0; // eslint-disable-line no-undef
+
+		if ( document.getElementById( 'wpadminbar' ) ) {
+			offset = ( parseInt( offset, 10 ) + 32 ).toString();
+		}
+
+		return offset;
+	};
+
+	app.getHashElement = function ( hash ) {
+		const isEl = typeof hash === 'object';
+
+		// Check if linking to ID
+		let elementToScrollTo = isEl
+			? hash
+			: document.getElementById( hash.substr( 1 ) );
+
+		// If not..
+		if ( ! elementToScrollTo && ! isEl ) {
+			// Check if linking to a named anchor
+			elementToScrollTo = document.querySelector(
+				'[name="' + hash.substr( 1 ) + '"]'
+			);
+		}
+
+		if ( ! elementToScrollTo ) {
+			return false;
+		}
+
+		if (
+			elementToScrollTo.classList.contains( 'no-scroll' ) ||
+			elementToScrollTo.closest( '.no-scroll-wrap' )
+		) {
+			return false;
+		}
+
+		return elementToScrollTo;
+	};
+
+	app.scrollToHash = function ( hash, evt ) {
+		const elementToScrollTo =
+			typeof hash === 'object' ? hash : app.getHashElement( hash );
+
+		if ( ! elementToScrollTo ) {
+			return;
+		}
+
+		app.isScrolling = true;
+
+		app.scrollTo =
+			elementToScrollTo.getBoundingClientRect().top - app.offset;
+
+		const event = new Event( 'hash_link_scroll_offset.scroll_to' );
+		app.$html_and_body.forEach( function ( el ) {
+			el.dispatchEvent( event );
+		} );
+
+		app.scroll( app.scrollTo );
+
+		if ( evt && evt.preventDefault ) {
+			evt.preventDefault();
+			window.location.hash = app.hash;
+		}
+	};
+
+	app.scroll = function ( scrollTo ) {
+		window.scrollTo( {
+			top: scrollTo,
+			behavior: 'smooth',
+		} );
+		app.initialScroll = app.isScrolling = false;
+		const event = new Event( 'hash_link_scroll_offset.complete' );
+
+		app.$html_and_body.forEach( function ( el ) {
+			el.dispatchEvent( event );
+		} );
+	};
+
+	app.init();
+
+	return app;
+} )( window, document, window.Hash_Link_Scroll_Offset );
