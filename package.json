@@ -12,11 +12,11 @@
 	},
 	"keywords": [],
 	"scripts": {
-		"build": "wp-scripts build src/hash-link-scroll-offset.js --output-path=assets/js",
-		"format": "wp-scripts format src/hash-link-scroll-offset.js",
+		"build": "wp-scripts build",
+		"format": "wp-scripts format",
 		"lint:css": "wp-scripts lint-style",
-		"lint:js": "wp-scripts lint-js src/hash-link-scroll-offset.js",
-		"start": "wp-scripts start src/hash-link-scroll-offset.js --output-path=assets/js",
+		"lint:js": "wp-scripts lint-js",
+		"start": "wp-scripts start",
 		"packages-update": "wp-scripts packages-update"
 	},
 	"devDependencies": {
