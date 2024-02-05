@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Plugin Name: Hash Link Scroll Offset
  * Plugin URI:  http://webdevstudios.com
@@ -45,7 +45,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $url  = '';
+	public static $url = '';
 
 	/**
 	 * Plugin path.
@@ -71,7 +71,7 @@ class Hash_Link_Scroll_Offset {
 	public function __construct() {
 		// Useful variables.
 		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
-		self::$path = trailingslashit( dirname( __FILE__ ) );
+		self::$path = trailingslashit( __DIR__ );
 		self::$name = __( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
 	}
 
@@ -108,7 +108,7 @@ class Hash_Link_Scroll_Offset {
 		if ( ! get_option( 'hash_link_scroll_offset' ) ) {
 			update_option( 'hash_link_scroll_offset', 0 );
 		}
-		add_option( 'hash_link_scroll_offset_msg', 1, null, 'no' );
+		add_option( 'hash_link_scroll_offset_msg', 1, '', 'no' );
 	}
 
 	/**
@@ -121,12 +121,14 @@ class Hash_Link_Scroll_Offset {
 			return;
 		}
 		delete_option( 'hash_link_scroll_offset_msg' );
+		// translators: %s is the name of the plugin.
 		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( __( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
-		echo '
-		<div id="message" class="updated">
-			<p>' . sprintf( __( 'The "%s" plugin has been activated. Please %s.', 'hash_link_scroll_offset' ), self::$name, $settings_link ) . '</p>
-		</div>
-		';
+
+		echo wp_kses_post(
+			'<div id="message" class="updated">
+				<p>' . /* translators: %1$s is the name of the plugin, %2$s is a link to the settings page. */ sprintf( __( 'The "%1$s" plugin has been activated. Please %2$s.', 'hash_link_scroll_offset' ), self::$name, $settings_link ) . '</p>
+			</div>'
+		);
 	}
 
 	/**
@@ -188,8 +190,8 @@ class Hash_Link_Scroll_Offset {
 			}
 		</style>
 		<?php endif; ?>
-		<div class="hash_link_scroll_offset_setting_wrap<?php echo $class; ?>">
-			<input class="small-text" placeholder="50" type="number" step="1" min="1" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="<?php echo get_option( 'hash_link_scroll_offset', 0 ); ?>"> <?php esc_html_e( 'pixels', 'hash_link_scroll_offset' ); ?>
+		<div class="hash_link_scroll_offset_setting_wrap<?php echo esc_attr( $class ); ?>">
+			<input class="small-text" placeholder="50" type="number" step="1" min="1" id="hash_link_scroll_offset" name="hash_link_scroll_offset" value="<?php echo esc_attr( get_option( 'hash_link_scroll_offset', 0 ) ); ?>"> <?php esc_html_e( 'pixels', 'hash_link_scroll_offset' ); ?>
 		</div>
 		<p class="description"><?php esc_html_e( 'When the Admin Bar is displayed in your theme, this value is automatically increased by 32px.', 'hash_link_scroll_offset' ); ?></p>
 		<?php
@@ -202,8 +204,19 @@ class Hash_Link_Scroll_Offset {
 	 */
 	public function enqueue_js() {
 		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ? '' : '.min';
-		wp_enqueue_script( 'hash_link_scroll_offset', self::$url . "assets/js/hash-link-scroll-offset$min.js", [ 'jquery' ], self::VERSION, true );
-		wp_localize_script( 'hash_link_scroll_offset', 'hlso_offset', [ 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ] );
+
+		// Automatically load imported dependencies and assets version.
+		$asset_file = require plugin_dir_path( __FILE__ ) . 'assets/js/hash-link-scroll-offset.min.asset.php';
+
+		wp_register_script(
+			'hash_link_scroll_offset',
+			plugins_url( "assets/js/hash-link-scroll-offset$min.js", __FILE__ ),
+			$asset_file['dependencies'],
+			$asset_file['version'],
+			true
+		);
+		wp_enqueue_script( 'hash_link_scroll_offset' );
+		wp_add_inline_script( 'hash_link_scroll_offset', 'const hlsOffset = ' . wp_json_encode( array( 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ) ) . ';', 'before' );
 	}
 
 	/**
@@ -216,10 +229,8 @@ class Hash_Link_Scroll_Offset {
 	public function settings_url() {
 		return admin_url( 'options-general.php?hash_link_scroll_offset' );
 	}
-
 }
 
 // Init our class.
-$Hash_Link_Scroll_Offset = new Hash_Link_Scroll_Offset();
-$Hash_Link_Scroll_Offset->hooks();
-
+$hash_link_scroll_offset = new Hash_Link_Scroll_Offset();
+$hash_link_scroll_offset->hooks();
