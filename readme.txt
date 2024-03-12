@@ -35,7 +35,8 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 == Changelog ==
 
 = 0.3.0 =
-* Removed jQuery dependency in our javascript
+* Updated: Removed jQuery dependency in our javascript
+* Updated: Escaping and sanitizing of output.
 
 = 0.2.2 =
 * Confirmed compatibility with WordPress 6.4
