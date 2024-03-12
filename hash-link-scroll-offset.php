@@ -216,7 +216,7 @@ class Hash_Link_Scroll_Offset {
 			true
 		);
 		wp_enqueue_script( 'hash_link_scroll_offset' );
-		wp_add_inline_script( 'hash_link_scroll_offset', 'const hlsOffset = ' . wp_json_encode( array( 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ) ) . ';', 'before' );
+		wp_add_inline_script( 'hash_link_scroll_offset', 'const hlsOffset = ' . wp_json_encode( [ 'offset' => get_option( 'hash_link_scroll_offset', 0 ) ] ) . ';', 'before' );
 	}
 
 	/**
