@@ -3,8 +3,8 @@ Contributors:      webdevstudios, pluginize
 Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 5.5
-Tested up to:      6.5.0
-Stable tag:        0.3.0
+Tested up to:      6.7.1
+Stable tag:        0.3.1
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 
 == Changelog ==
+
+= 0.3.1 =
+* Fixed: instant jumps instead of smooth scroll from previous jQuery conversion.
 
 = 0.3.0 =
 * Updated: Removed jQuery dependency in our javascript
