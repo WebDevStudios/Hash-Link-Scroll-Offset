@@ -118,7 +118,6 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 
 		if ( evt && evt.preventDefault ) {
 			evt.preventDefault();
-			window.location.hash = app.hash;
 		}
 	};
 
