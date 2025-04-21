@@ -34,6 +34,10 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.3.2 =
+* Fixed: textdomain loading timing.
+* Updated: Confirmed compatibility with WordPress 6.8
+
 = 0.3.1 =
 * Fixed: instant jumps instead of smooth scroll from previous jQuery conversion.
 
@@ -80,6 +84,23 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 * First release
 
 == Upgrade Notice ==
+
+= 0.3.2 =
+* Fixed: textdomain loading timing.
+* Updated: Confirmed compatibility with WordPress 6.8
+
+= 0.3.1 =
+* Fixed: instant jumps instead of smooth scroll from previous jQuery conversion.
+
+= 0.3.0 =
+* Updated: Removed jQuery dependency in our javascript
+* Updated: Escaping and sanitizing of output.
+
+= 0.2.2 =
+* Confirmed compatibility with WordPress 6.4
+
+= 0.2.1 =
+* Confirmed compatibility with WordPress 6.3
 
 = 0.2.0 =
 * Misc changes
