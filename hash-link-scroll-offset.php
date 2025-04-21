@@ -83,6 +83,11 @@ class Hash_Link_Scroll_Offset {
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
 	}
 
+	/**
+	 * Set some static properties on init.
+	 *
+	 * @since 0.3.2
+	 */
 	public function static_properties() {
 		// Useful variables.
 		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
