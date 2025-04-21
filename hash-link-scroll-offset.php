@@ -68,12 +68,7 @@ class Hash_Link_Scroll_Offset {
 	 *
 	 * @since 0.1.0
 	 */
-	public function __construct() {
-		// Useful variables.
-		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
-		self::$path = trailingslashit( __DIR__ );
-		self::$name = __( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
-	}
+	public function __construct() {}
 
 	/**
 	 * Add our hooks.
@@ -83,8 +78,16 @@ class Hash_Link_Scroll_Offset {
 	public function hooks() {
 		register_activation_hook( __FILE__, [ $this, 'activate' ] );
 		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'init', [ $this, 'static_properties' ] );
 		add_filter( 'admin_init', [ $this, 'admin_hooks' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
+	}
+
+	public function static_properties() {
+		// Useful variables.
+		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
+		self::$path = trailingslashit( __DIR__ );
+		self::$name = esc_html__( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
 	}
 
 	/**
