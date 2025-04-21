@@ -45,7 +45,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $url = '';
+	public static string $url = '';
 
 	/**
 	 * Plugin path.
@@ -53,7 +53,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $path = '';
+	public static string $path = '';
 
 	/**
 	 * Plugin name.
@@ -61,7 +61,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string|void
 	 */
-	public static $name = '';
+	public static string $name = '';
 
 	/**
 	 * Sets up our plugin
@@ -125,7 +125,7 @@ class Hash_Link_Scroll_Offset {
 		}
 		delete_option( 'hash_link_scroll_offset_msg' );
 		// translators: %s is the name of the plugin.
-		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( __( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
+		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( esc_html__( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
 
 		echo wp_kses_post(
 			'<div id="message" class="updated">
@@ -162,10 +162,10 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 *
 	 * @param array $links Array of links for settings area.
-	 * @return mixed
+	 * @return array
 	 */
-	public function settings_link( $links ) {
-		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
+	public function settings_link( array $links ) {
+		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), esc_html__( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
@@ -227,7 +227,7 @@ class Hash_Link_Scroll_Offset {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return string|void
+	 * @return string
 	 */
 	public function settings_url() {
 		return admin_url( 'options-general.php?hash_link_scroll_offset' );
