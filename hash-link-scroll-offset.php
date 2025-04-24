@@ -3,7 +3,7 @@
  * Plugin Name: Hash Link Scroll Offset
  * Plugin URI:  http://webdevstudios.com
  * Description: Offset the scroll position of anchored links. Handy if you have a sticky header that covers linked material.
- * Version:     0.3.1
+ * Version:     0.3.2
  * Author:      WebDevStudios
  * Author URI:  http://webdevstudios.com
  * Donate link: http://webdevstudios.com
@@ -37,7 +37,7 @@
  */
 class Hash_Link_Scroll_Offset {
 
-	const VERSION = '0.3.1';
+	const VERSION = '0.3.2';
 
 	/**
 	 * Plugin URL.
@@ -45,7 +45,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $url = '';
+	public static string $url = '';
 
 	/**
 	 * Plugin path.
@@ -53,7 +53,7 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string
 	 */
-	public static $path = '';
+	public static string $path = '';
 
 	/**
 	 * Plugin name.
@@ -61,19 +61,14 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 * @var string|void
 	 */
-	public static $name = '';
+	public static string $name = '';
 
 	/**
 	 * Sets up our plugin
 	 *
 	 * @since 0.1.0
 	 */
-	public function __construct() {
-		// Useful variables.
-		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
-		self::$path = trailingslashit( __DIR__ );
-		self::$name = __( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
-	}
+	public function __construct() {}
 
 	/**
 	 * Add our hooks.
@@ -83,8 +78,21 @@ class Hash_Link_Scroll_Offset {
 	public function hooks() {
 		register_activation_hook( __FILE__, [ $this, 'activate' ] );
 		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'init', [ $this, 'static_properties' ] );
 		add_filter( 'admin_init', [ $this, 'admin_hooks' ] );
 		add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_js' ] );
+	}
+
+	/**
+	 * Set some static properties on init.
+	 *
+	 * @since 0.3.2
+	 */
+	public function static_properties() {
+		// Useful variables.
+		self::$url  = trailingslashit( plugin_dir_url( __FILE__ ) );
+		self::$path = trailingslashit( __DIR__ );
+		self::$name = esc_html__( 'Hash Link Scroll Offset', 'hash_link_scroll_offset' );
 	}
 
 	/**
@@ -122,7 +130,7 @@ class Hash_Link_Scroll_Offset {
 		}
 		delete_option( 'hash_link_scroll_offset_msg' );
 		// translators: %s is the name of the plugin.
-		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( __( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
+		$settings_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), sprintf( esc_html__( 'update the "%s" setting', 'hash_link_scroll_offset' ), self::$name ) );
 
 		echo wp_kses_post(
 			'<div id="message" class="updated">
@@ -159,10 +167,10 @@ class Hash_Link_Scroll_Offset {
 	 * @since 0.1.0
 	 *
 	 * @param array $links Array of links for settings area.
-	 * @return mixed
+	 * @return array
 	 */
-	public function settings_link( $links ) {
-		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), __( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
+	public function settings_link( array $links ) {
+		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), esc_html__( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
@@ -224,7 +232,7 @@ class Hash_Link_Scroll_Offset {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @return string|void
+	 * @return string
 	 */
 	public function settings_url() {
 		return admin_url( 'options-general.php?hash_link_scroll_offset' );
