@@ -3,7 +3,7 @@
 	"title": "Hash Link Scroll Offset",
 	"description": "Offset the scroll position of anchored links. Handy if you have a sticky header that covers linked material.",
 	"main": "assets/js/hash-link-scroll-offset.js",
-	"version": "0.3.2",
+	"version": "0.4.0",
 	"homepage": "http://webdevstudios.com",
 	"author": {
 		"name": "WebDevStudios",
