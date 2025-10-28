@@ -4,7 +4,7 @@ Donate link:       http://webdevstudios.com
 Tags:
 Requires at least: 5.5
 Tested up to:      6.8
-Stable tag:        0.3.2
+Stable tag:        0.4.0
 License:           GPLv2 or later
 License URI:       http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,6 +33,9 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 
 == Changelog ==
+
+= 0.4.0 =
+* Fixed: issues with window scrollY offsets
 
 = 0.3.2 =
 * Fixed: textdomain loading timing.
@@ -85,51 +88,4 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Upgrade Notice ==
 
-= 0.3.2 =
-* Fixed: textdomain loading timing.
-* Updated: Confirmed compatibility with WordPress 6.8
-
-= 0.3.1 =
-* Fixed: instant jumps instead of smooth scroll from previous jQuery conversion.
-
-= 0.3.0 =
-* Updated: Removed jQuery dependency in our javascript
-* Updated: Escaping and sanitizing of output.
-
-= 0.2.2 =
-* Confirmed compatibility with WordPress 6.4
-
-= 0.2.1 =
-* Confirmed compatibility with WordPress 6.3
-
-= 0.2.0 =
-* Misc changes
-* Tested up to WordPress 5.9 *
-
-= 0.1.8 =
-* Adjust JS to account for relative urls.
-* Add checks for evt and event.preventDefault existing.
-
-= 0.1.7 =
-* Refactor JS to be more extensible, and adjust auto-scrolling (when hash exists in URL) to be more intelligent.
-
-= 0.1.6 =
-* `'hash_link_scroll_offset.scroll_to'` jQuery event fired befor scrolling is initated. Also introduce useful properties, `scrollTo`, `initialScroll`, and `isScrolling`;
-
-= 0.1.5 =
-* `'hash_link_scroll_offset.complete'` jQuery event fired when scrolling complete.
-
-= 0.1.4 =
-* Fix "Cannot use a scalar value as an array" debug warning. ([Relevant Trac ticket](https://core.trac.wordpress.org/ticket/29722#comment:8))
-
-= 0.1.3 =
-* Prevent browser windows from moving/blinking on initial click of anchor link. Props [@ImBigWill](https://github.com/WebDevStudios/Hash-Link-Scroll-Offset/pull/9).
-
-= 0.1.2 =
-* Automatically compensate for admin bar. Props [@salcode](https://github.com/WebDevStudios/Hash-Link-Scroll-Offset/pull/5).
-
-= 0.1.1 =
-* Add `no-scroll` class exception. Props [@billerickson](https://github.com/billerickson)
-
-= 0.1.0 =
-First Release
+* Small bugfixes

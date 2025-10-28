@@ -107,7 +107,7 @@ window.Hash_Link_Scroll_Offset = window.Hash_Link_Scroll_Offset || {};
 		app.isScrolling = true;
 
 		app.scrollTo =
-			elementToScrollTo.getBoundingClientRect().top - app.offset;
+			elementToScrollTo.getBoundingClientRect().top + window.scrollY - app.offset;
 
 		const event = new Event( 'hash_link_scroll_offset.scroll_to' );
 		app.htmlAndBody.forEach( function ( el ) {
