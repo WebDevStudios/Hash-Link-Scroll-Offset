@@ -20,6 +20,6 @@
 		"packages-update": "wp-scripts packages-update"
 	},
 	"devDependencies": {
-		"@wordpress/scripts": "^30.26.0"
+		"@wordpress/scripts": "^31.2.0"
 	}
 }
