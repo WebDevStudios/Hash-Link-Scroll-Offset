@@ -34,6 +34,10 @@ Use the `no-scroll` class on any hash links that are not meant to scroll to an a
 
 == Changelog ==
 
+= 0.4.2 =
+* Updated: Confirmed compatibility with WordPress 7.0.
+* Updated: Touched up admin link and setting styles.
+
 = 0.4.1 =
 * Updated: Build process changes for compiled assets.
 * Updated: Confirmed compatibility with WordPress 6.9.
