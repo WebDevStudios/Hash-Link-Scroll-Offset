@@ -234,7 +234,7 @@ class Hash_Link_Scroll_Offset {
 	 * @return string
 	 */
 	public function settings_url() {
-		return admin_url( 'options-general.php?hash_link_scroll_offset' );
+		return esc_url( admin_url( 'options-general.php?hash_link_scroll_offset#hash_link_scroll_offset' ) );
 	}
 }
 
