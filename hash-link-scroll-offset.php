@@ -3,7 +3,7 @@
  * Plugin Name: Hash Link Scroll Offset
  * Plugin URI:  http://webdevstudios.com
  * Description: Offset the scroll position of anchored links. Handy if you have a sticky header that covers linked material.
- * Version:     0.4.1
+ * Version:     0.4.2
  * Author:      WebDevStudios
  * Author URI:  http://webdevstudios.com
  * Donate link: http://webdevstudios.com
@@ -37,7 +37,7 @@
  */
 class Hash_Link_Scroll_Offset {
 
-	const VERSION = '0.4.1';
+	const VERSION = '0.4.2';
 
 	/**
 	 * Plugin URL.
@@ -170,7 +170,7 @@ class Hash_Link_Scroll_Offset {
 	 * @return array
 	 */
 	public function settings_link( array $links ) {
-		$setting_link = sprintf( '<a href="%s">%s</a>', $this->settings_url(), esc_html__( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
+		$setting_link = sprintf( '<a href="%1$s">%2$s</a>', $this->settings_url(), esc_html__( 'Change Offset Setting', 'hash_link_scroll_offset' ) );
 		array_unshift( $links, $setting_link );
 
 		return $links;
@@ -193,8 +193,7 @@ class Hash_Link_Scroll_Offset {
 				display: block;
 			}
 			.hash_link_scroll_offset_setting_label.highlighted {
-				display: block;
-				outline: #ffbebe 8px solid;
+				outline-width: 10px;
 			}
 		</style>
 		<?php endif; ?>
@@ -235,7 +234,7 @@ class Hash_Link_Scroll_Offset {
 	 * @return string
 	 */
 	public function settings_url() {
-		return admin_url( 'options-general.php?hash_link_scroll_offset' );
+		return esc_url( admin_url( 'options-general.php?hash_link_scroll_offset#hash_link_scroll_offset' ) );
 	}
 }
 
