@@ -193,8 +193,7 @@ class Hash_Link_Scroll_Offset {
 				display: block;
 			}
 			.hash_link_scroll_offset_setting_label.highlighted {
-				display: block;
-				outline: #ffbebe 8px solid;
+				outline-width: 10px;
 			}
 		</style>
 		<?php endif; ?>
